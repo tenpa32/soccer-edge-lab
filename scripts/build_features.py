@@ -46,6 +46,7 @@ for _, match in matches.iterrows():
         result = 1
 
     feature_rows.append({
+        "Season": match["Season"],
         "Date": match["Date"],
         "HomeTeam": home_team,
         "AwayTeam": away_team,
