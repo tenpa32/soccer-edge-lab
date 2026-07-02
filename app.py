@@ -1,7 +1,8 @@
 import streamlit as st
-from data_feed import DataFeed
-from model_service import ModelService
-from bet_engine import BetEngine
+
+from core.data_feed import DataFeed
+from core.model_service import ModelService
+from core.bet_engine import BetEngine
 
 st.set_page_config(page_title="Soccer Betting Dashboard", layout="wide")
 
