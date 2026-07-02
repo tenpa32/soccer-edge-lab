@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, log_loss
 
-features = pd.read_csv("data/processed/match_features.csv")
+features = pd.read_csv("data/processed/feature_store_v1.csv")
 
 train = features[features["Date"] < "2025-01-01"]
 test = features[features["Date"] >= "2025-01-01"]
@@ -20,6 +20,10 @@ feature_columns = [
     "AwayFormGoalsFor",
     "HomeFormGoalsAgainst",
     "AwayFormGoalsAgainst",
+    "HomeAdvantage",
+    "FormPointDiff",
+    "FormGoalsForDiff",
+    "FormGoalsAgainstDiff",
 ]
 
 X_train = train[feature_columns]
