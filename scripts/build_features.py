@@ -75,6 +75,10 @@ for _, match in matches.iterrows():
         "DefenseRatingDiff": home_attack_defense["defense_rating"] - away_attack_defense["defense_rating"],
         "GoalDiffRatingDiff": home_attack_defense["goal_diff_rating"] - away_attack_defense["goal_diff_rating"],
 
+        "B365H": match.get("B365H"),
+        "B365D": match.get("B365D"),
+        "B365A": match.get("B365A"),
+
         "Result": result
     })
 

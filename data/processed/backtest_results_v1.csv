@@ -1,0 +1,445 @@
+Date,HomeTeam,AwayTeam,Bet,Odds,EV,ActualResult,Profit,Won
+2025-01-03,Valencia,Real Madrid,away,1.42,0.050623544063898906,away,0.41999999999999993,True
+2025-01-10,Vallecano,Celta,home,2.75,0.14967154206563427,home,1.75,True
+2025-01-11,Valladolid,Betis,draw,3.5,0.062948278608711,home,-1.0,False
+2025-01-11,Sevilla,Valencia,home,2.0,0.049924982104351256,draw,-1.0,False
+2025-01-11,Alaves,Girona,away,2.75,0.18721744150061714,away,1.75,True
+2025-01-11,Espanol,Leganes,away,4.0,0.07692568677025968,draw,-1.0,False
+2025-01-12,Ath Madrid,Osasuna,away,10.0,0.07275769861789927,home,-1.0,False
+2025-01-12,Las Palmas,Getafe,home,2.45,0.27437830716230605,away,-1.0,False
+2025-01-13,Sociedad,Villarreal,away,4.0,0.3712664623244144,home,-1.0,False
+2025-01-18,Girona,Sevilla,home,1.91,0.06994376082493958,away,-1.0,False
+2025-01-18,Getafe,Barcelona,away,1.5,0.04051356744951162,draw,-1.0,False
+2025-01-18,Betis,Alaves,home,1.75,0.03557849545871883,away,-1.0,False
+2025-01-19,Celta,Ath Bilbao,away,2.6,0.16616975213289642,away,1.6,True
+2025-01-19,Osasuna,Vallecano,home,2.15,0.05019194929200377,draw,-1.0,False
+2025-01-19,Valencia,Sociedad,away,2.55,0.0418778789788854,home,-1.0,False
+2025-01-25,Valladolid,Real Madrid,draw,6.0,0.032465180457661225,away,-1.0,False
+2025-01-25,Sevilla,Espanol,draw,3.8,0.07213821452560487,draw,2.8,True
+2025-01-25,Mallorca,Betis,away,3.5,0.27878212130368185,away,2.5,True
+2025-01-25,Ath Madrid,Villarreal,away,4.75,0.1342186028630603,draw,-1.0,False
+2025-01-26,Barcelona,Valencia,draw,7.5,0.16574529493371015,home,-1.0,False
+2025-01-26,Sociedad,Getafe,home,1.75,0.12480721447488063,away,-1.0,False
+2025-01-26,Vallecano,Girona,away,2.88,0.13178170320337035,home,-1.0,False
+2025-01-27,Alaves,Celta,home,2.63,0.14234705487435484,draw,-1.0,False
+2025-01-31,Leganes,Vallecano,home,3.3,0.3273627388030622,away,-1.0,False
+2025-02-01,Villarreal,Valladolid,draw,7.0,0.16064900960157247,home,-1.0,False
+2025-02-01,Getafe,Sevilla,home,2.45,0.03036356069325885,draw,-1.0,False
+2025-02-01,Espanol,Real Madrid,draw,5.75,0.07127634386940063,home,-1.0,False
+2025-02-01,Ath Madrid,Mallorca,home,1.4,0.0718790158979421,home,0.3999999999999999,True
+2025-02-02,Barcelona,Alaves,draw,7.5,0.19531179606168725,home,-1.0,False
+2025-02-02,Osasuna,Sociedad,home,3.0,0.29447150244337816,home,2.0,True
+2025-02-02,Valencia,Celta,draw,3.1,0.06077242949883832,home,-1.0,False
+2025-02-08,Real Madrid,Ath Madrid,home,1.85,0.0726212202474803,draw,-1.0,False
+2025-02-08,Las Palmas,Villarreal,draw,3.9,0.439503204719049,away,-1.0,False
+2025-02-08,Ath Bilbao,Girona,away,5.0,0.2259930410276758,home,-1.0,False
+2025-02-08,Celta,Betis,away,3.2,0.1130562309628107,home,-1.0,False
+2025-02-09,Sevilla,Barcelona,draw,4.5,0.11255792886904437,away,-1.0,False
+2025-02-09,Valencia,Leganes,away,5.5,0.5215023392449836,home,-1.0,False
+2025-02-10,Mallorca,Osasuna,away,4.33,0.3831660809851021,draw,-1.0,False
+2025-02-14,Girona,Getafe,home,1.95,0.10187797698753265,away,-1.0,False
+2025-02-15,Villarreal,Valencia,home,1.5,0.0508882896152818,draw,-1.0,False
+2025-02-15,Osasuna,Real Madrid,away,1.57,0.07275120315541095,draw,-1.0,False
+2025-02-15,Leganes,Alaves,home,3.1,0.4797050872279254,draw,-1.0,False
+2025-02-15,Ath Madrid,Celta,home,1.39,0.04373596388002721,draw,-1.0,False
+2025-02-16,Betis,Sociedad,home,2.55,0.15292356634168058,home,1.5499999999999998,True
+2025-02-16,Mallorca,Las Palmas,away,5.25,0.2385212293983574,home,-1.0,False
+2025-02-16,Valladolid,Sevilla,draw,3.4,0.16478327458420772,away,-1.0,False
+2025-02-17,Barcelona,Vallecano,draw,7.0,0.0726424408201991,home,-1.0,False
+2025-02-21,Celta,Osasuna,away,5.25,0.44799817835679967,home,-1.0,False
+2025-02-22,Vallecano,Villarreal,draw,3.5,0.09787203010004397,away,-1.0,False
+2025-02-22,Valencia,Ath Madrid,away,1.91,0.2797126450102627,away,0.9099999999999999,True
+2025-02-22,Las Palmas,Barcelona,draw,7.0,0.9638782805837605,away,-1.0,False
+2025-02-22,Alaves,Espanol,draw,3.25,0.0539575623684887,away,-1.0,False
+2025-02-23,Getafe,Betis,away,2.9,0.034726735520151264,away,1.9,True
+2025-02-23,Sociedad,Leganes,away,7.0,0.21165937220234476,home,-1.0,False
+2025-02-28,Valladolid,Las Palmas,draw,3.2,0.253852219683004,draw,2.2,True
+2025-03-01,Girona,Celta,home,2.2,0.14073758752048815,draw,-1.0,False
+2025-03-01,Betis,Real Madrid,away,1.73,0.10745791423292661,home,-1.0,False
+2025-03-02,Mallorca,Alaves,home,2.25,0.25658314738277443,draw,-1.0,False
+2025-03-02,Osasuna,Valencia,home,2.3,0.2674173409456033,draw,-1.0,False
+2025-03-02,Barcelona,Sociedad,away,12.0,0.3678349183968441,home,-1.0,False
+2025-03-02,Leganes,Getafe,home,3.1,0.20191569613469595,home,2.1,True
+2025-03-08,Alaves,Villarreal,away,2.38,0.08541166765487929,home,-1.0,False
+2025-03-08,Celta,Leganes,away,7.0,0.43232495397384096,home,-1.0,False
+2025-03-08,Valencia,Valladolid,away,9.0,0.21949458720781245,home,-1.0,False
+2025-03-09,Getafe,Ath Madrid,away,1.95,0.24151316353431085,home,-1.0,False
+2025-03-09,Real Madrid,Vallecano,home,1.29,0.05333576338785373,home,0.29000000000000004,True
+2025-03-09,Ath Bilbao,Mallorca,home,1.62,0.1062154474102015,draw,-1.0,False
+2025-03-09,Betis,Las Palmas,draw,4.5,0.050904927444938686,home,-1.0,False
+2025-03-14,Las Palmas,Alaves,home,2.88,0.222408240640803,draw,-1.0,False
+2025-03-15,Girona,Valencia,home,1.92,0.03534335980330283,draw,-1.0,False
+2025-03-15,Valladolid,Celta,draw,3.8,0.46762269910455423,away,-1.0,False
+2025-03-15,Villarreal,Real Madrid,away,2.15,0.2601606024296146,away,1.15,True
+2025-03-16,Sevilla,Ath Bilbao,away,2.5,0.11279381840574598,away,1.5,True
+2025-03-16,Osasuna,Getafe,home,2.25,0.11720984430665737,away,-1.0,False
+2025-03-16,Vallecano,Sociedad,home,2.5,0.059726598101616846,draw,-1.0,False
+2025-03-16,Ath Madrid,Barcelona,home,3.1,0.1663306306414376,away,-1.0,False
+2025-03-16,Leganes,Betis,draw,3.3,0.11726950112428658,away,-1.0,False
+2025-03-27,Barcelona,Osasuna,draw,7.0,0.06834346448728734,home,-1.0,False
+2025-03-29,Alaves,Vallecano,away,4.1,0.2409929731556617,away,3.0999999999999996,True
+2025-03-30,Valencia,Mallorca,away,3.75,0.06762968636665612,home,-1.0,False
+2025-03-30,Getafe,Villarreal,home,3.25,0.06541526961745148,away,-1.0,False
+2025-03-30,Barcelona,Girona,away,10.0,0.09574819073554197,home,-1.0,False
+2025-03-31,Celta,Las Palmas,draw,4.1,0.06554338511800095,draw,3.0999999999999996,True
+2025-04-05,Girona,Alaves,home,2.05,0.2345540965488495,away,-1.0,False
+2025-04-05,Mallorca,Celta,home,2.63,0.2505710623625157,away,-1.0,False
+2025-04-05,Real Madrid,Valencia,home,1.3,0.03977350575869343,away,-1.0,False
+2025-04-06,Valladolid,Getafe,draw,3.1,0.15843426740979716,away,-1.0,False
+2025-04-06,Las Palmas,Sociedad,draw,3.2,0.05171910827708226,away,-1.0,False
+2025-04-06,Sevilla,Ath Madrid,away,2.2,0.24552119631260183,away,1.2000000000000002,True
+2025-04-06,Villarreal,Ath Bilbao,away,3.25,0.23098386187985231,draw,-1.0,False
+2025-04-07,Leganes,Osasuna,draw,3.1,0.03719176381547129,draw,2.1,True
+2025-04-11,Valencia,Sevilla,home,2.3,0.03711056288417125,home,1.2999999999999998,True
+2025-04-12,Celta,Espanol,away,6.0,0.219399387860441,away,5.0,True
+2025-04-12,Leganes,Barcelona,draw,6.0,0.5550739089054024,away,-1.0,False
+2025-04-12,Sociedad,Mallorca,away,5.5,0.16786616461667325,away,4.5,True
+2025-04-13,Alaves,Real Madrid,away,1.62,0.17909618622720958,away,0.6200000000000001,True
+2025-04-13,Ath Bilbao,Vallecano,home,1.75,0.1317272480655718,home,0.75,True
+2025-04-13,Betis,Villarreal,home,2.35,0.051408722785016625,away,-1.0,False
+2025-04-18,Espanol,Getafe,home,2.88,0.2352516159525444,home,1.88,True
+2025-04-19,Barcelona,Celta,home,1.3,0.03946369890260981,home,0.30000000000000004,True
+2025-04-19,Las Palmas,Ath Madrid,draw,4.2,0.05268454846790038,home,-1.0,False
+2025-04-20,Real Madrid,Ath Bilbao,away,5.25,0.09492216638013296,home,-1.0,False
+2025-04-20,Sevilla,Alaves,home,2.0,0.09940817447362993,draw,-1.0,False
+2025-04-20,Valladolid,Osasuna,draw,3.4,0.22668666577989827,away,-1.0,False
+2025-04-20,Villarreal,Sociedad,away,5.0,0.06217786211044407,draw,-1.0,False
+2025-04-23,Alaves,Sociedad,away,3.4,0.24101442282233743,home,-1.0,False
+2025-04-23,Ath Bilbao,Las Palmas,draw,5.25,0.06725878517007833,home,-1.0,False
+2025-04-23,Celta,Villarreal,away,2.8,0.17975161465370326,home,-1.0,False
+2025-04-23,Getafe,Real Madrid,away,1.75,0.1534885793884746,away,0.75,True
+2025-04-24,Ath Madrid,Vallecano,home,1.53,0.08504682645094364,home,0.53,True
+2025-04-24,Betis,Valladolid,draw,7.0,0.27224492907345454,home,-1.0,False
+2025-04-24,Osasuna,Sevilla,home,2.5,0.13525613080295584,home,1.5,True
+2025-04-27,Villarreal,Espanol,draw,5.0,0.3907670496732978,home,-1.0,False
+2025-05-03,Alaves,Ath Madrid,away,2.15,0.3289996457536666,draw,-1.0,False
+2025-05-03,Las Palmas,Valencia,draw,3.3,0.04738841326633958,away,-1.0,False
+2025-05-03,Valladolid,Barcelona,draw,8.0,0.654301252479168,away,-1.0,False
+2025-05-03,Villarreal,Osasuna,away,6.0,0.17052967274238373,home,-1.0,False
+2025-05-04,Espanol,Betis,away,2.38,0.039691198407181716,away,1.38,True
+2025-05-04,Sevilla,Leganes,draw,3.5,0.058274961370236245,draw,2.5,True
+2025-05-04,Sociedad,Ath Bilbao,away,3.0,0.2868001417957915,draw,-1.0,False
+2025-05-10,Ath Madrid,Sociedad,home,1.67,0.1366653827890958,home,0.6699999999999999,True
+2025-05-10,Celta,Sevilla,draw,3.6,0.08711374583878873,home,-1.0,False
+2025-05-10,Girona,Villarreal,draw,3.8,0.0849722930315957,away,-1.0,False
+2025-05-10,Mallorca,Valladolid,draw,5.25,0.22962973242973383,home,-1.0,False
+2025-05-11,Ath Bilbao,Alaves,home,1.8,0.3067801232205789,home,0.8,True
+2025-05-11,Barcelona,Real Madrid,away,3.2,0.35081242989649386,home,-1.0,False
+2025-05-11,Leganes,Espanol,home,2.4,0.05455727822219547,home,1.4,True
+2025-05-13,Sociedad,Celta,draw,3.3,0.08388046332204757,away,-1.0,False
+2025-05-13,Valladolid,Girona,draw,3.9,0.5026091272774431,away,-1.0,False
+2025-05-13,Sevilla,Las Palmas,draw,3.7,0.19008891683306905,home,-1.0,False
+2025-05-14,Alaves,Valencia,away,3.7,0.2227896149735582,home,-1.0,False
+2025-05-14,Real Madrid,Mallorca,home,1.38,0.09422571059484275,home,0.3799999999999999,True
+2025-05-14,Villarreal,Leganes,draw,5.75,0.3369134772579683,home,-1.0,False
+2025-05-15,Espanol,Barcelona,draw,5.75,0.1883824536143004,away,-1.0,False
+2025-05-15,Getafe,Ath Bilbao,away,2.63,0.2969918188747833,away,1.63,True
+2025-05-15,Osasuna,Ath Madrid,away,2.1,0.17158298099221359,home,-1.0,False
+2025-05-15,Vallecano,Betis,away,2.4,0.11198773130913553,draw,-1.0,False
+2025-05-18,Sevilla,Real Madrid,away,1.75,0.19432027742755875,away,0.75,True
+2025-05-18,Valladolid,Alaves,home,6.0,0.6768186763797357,away,-1.0,False
+2025-05-18,Valencia,Ath Bilbao,away,3.8,0.5920280590942391,away,2.8,True
+2025-05-18,Barcelona,Villarreal,home,1.83,0.16507932754932875,away,-1.0,False
+2025-05-18,Las Palmas,Leganes,home,2.9,0.2144241566095233,away,-1.0,False
+2025-05-18,Celta,Vallecano,draw,3.9,0.0813797839040844,away,-1.0,False
+2025-05-18,Mallorca,Getafe,home,2.0,0.1166762370719785,away,-1.0,False
+2025-05-23,Betis,Valencia,home,1.91,0.06757032201552193,draw,-1.0,False
+2025-05-24,Vallecano,Mallorca,away,6.25,0.5458955109743846,draw,-1.0,False
+2025-05-24,Real Madrid,Sociedad,home,1.42,0.11134634473522298,home,0.41999999999999993,True
+2025-05-24,Leganes,Valladolid,draw,5.5,0.497382119333835,home,-1.0,False
+2025-05-24,Espanol,Las Palmas,draw,4.75,0.4908526134631108,home,-1.0,False
+2025-05-24,Alaves,Osasuna,home,3.2,0.13106737785612244,draw,-1.0,False
+2025-05-24,Getafe,Celta,home,4.1,0.3150449933724422,away,-1.0,False
+2025-05-25,Ath Bilbao,Barcelona,away,2.1,0.2388432655607473,away,1.1,True
+2025-05-25,Girona,Ath Madrid,away,1.91,0.06353411226920525,away,0.9099999999999999,True
+2025-05-25,Villarreal,Sevilla,draw,5.0,0.039179378240352,home,-1.0,False
+2025-08-15,Villarreal,Oviedo,away,8.0,0.14941179961563522,home,-1.0,False
+2025-08-16,Valencia,Sociedad,home,2.6,0.3004932342782216,draw,-1.0,False
+2025-08-16,Alaves,Levante,home,2.15,0.06431886677416787,home,1.15,True
+2025-08-16,Mallorca,Barcelona,draw,5.0,0.04125738695280701,away,-1.0,False
+2025-08-17,Espanol,Ath Madrid,draw,3.9,0.13433828047488494,home,-1.0,False
+2025-08-18,Elche,Betis,away,2.2,0.203608248932603,draw,-1.0,False
+2025-08-19,Real Madrid,Osasuna,away,13.0,0.24522001020721396,home,-1.0,False
+2025-08-22,Betis,Alaves,home,1.91,0.19139589198953644,home,0.9099999999999999,True
+2025-08-23,Levante,Barcelona,draw,6.0,0.2272967082608861,away,-1.0,False
+2025-08-23,Mallorca,Celta,home,3.0,0.18942037237853815,draw,-1.0,False
+2025-08-24,Villarreal,Girona,home,1.53,0.051778415077231355,home,0.53,True
+2025-08-24,Sociedad,Espanol,away,5.0,0.09927515797109798,draw,-1.0,False
+2025-08-24,Osasuna,Valencia,home,2.4,0.17205688756534854,home,1.4,True
+2025-08-24,Oviedo,Real Madrid,home,9.5,1.0420028352904835,away,-1.0,False
+2025-08-27,Celta,Betis,away,3.25,0.3393312650341793,draw,-1.0,False
+2025-08-29,Valencia,Getafe,home,2.3,0.20068714335301885,home,1.2999999999999998,True
+2025-08-29,Elche,Levante,draw,3.25,0.136701560190984,home,-1.0,False
+2025-08-30,Oviedo,Sociedad,home,3.5,1.1651922877712955,home,2.5,True
+2025-08-30,Alaves,Ath Madrid,away,1.8,0.05592789569126855,draw,-1.0,False
+2025-08-30,Girona,Sevilla,draw,3.3,0.12030084756631632,away,-1.0,False
+2025-08-31,Betis,Ath Bilbao,home,3.0,0.11424257159986762,away,-1.0,False
+2025-08-31,Celta,Villarreal,away,2.5,0.19461177920391148,draw,-1.0,False
+2025-08-31,Vallecano,Barcelona,draw,5.5,0.17788563650611455,draw,4.5,True
+2025-09-12,Sevilla,Elche,draw,3.4,0.13451971012680364,draw,2.4,True
+2025-09-13,Ath Bilbao,Alaves,home,1.6,0.08660095247962807,away,-1.0,False
+2025-09-13,Ath Madrid,Villarreal,away,4.33,0.27859232192458383,home,-1.0,False
+2025-09-13,Getafe,Oviedo,away,4.5,0.44879760510695865,home,-1.0,False
+2025-09-13,Sociedad,Real Madrid,away,1.6,0.08038096405147233,away,0.6000000000000001,True
+2025-09-14,Levante,Betis,draw,3.25,0.04133976022196073,draw,2.25,True
+2025-09-14,Osasuna,Vallecano,home,2.55,0.20562993890019965,home,1.5499999999999998,True
+2025-09-19,Betis,Sociedad,home,1.91,0.08321936185958512,home,0.9099999999999999,True
+2025-09-20,Valencia,Ath Bilbao,away,2.55,0.24450298486376543,home,-1.0,False
+2025-09-20,Girona,Levante,draw,3.6,0.33864132151772575,away,-1.0,False
+2025-09-21,Elche,Oviedo,away,4.5,0.3921973176456439,home,-1.0,False
+2025-09-21,Vallecano,Celta,home,2.3,0.046900855496150085,draw,-1.0,False
+2025-09-23,Ath Bilbao,Girona,home,1.45,0.03406953672095647,draw,-1.0,False
+2025-09-23,Espanol,Valencia,away,3.4,0.05377554745481805,draw,-1.0,False
+2025-09-23,Levante,Real Madrid,draw,5.75,0.24204919741370445,away,-1.0,False
+2025-09-23,Sevilla,Villarreal,away,2.3,0.15636637361271344,away,1.2999999999999998,True
+2025-09-25,Osasuna,Elche,home,1.95,0.17721824436205824,draw,-1.0,False
+2025-09-25,Oviedo,Barcelona,draw,5.75,0.20680966154986957,away,-1.0,False
+2025-09-26,Girona,Espanol,draw,3.3,0.13302315497917028,draw,2.3,True
+2025-09-27,Ath Madrid,Real Madrid,away,2.3,0.28344214109028454,home,-1.0,False
+2025-09-27,Getafe,Levante,draw,3.1,0.06523539645488041,draw,2.1,True
+2025-09-27,Mallorca,Alaves,home,2.35,0.03390207691901881,home,1.35,True
+2025-09-27,Villarreal,Ath Bilbao,home,2.1,0.09314169815870144,home,1.1,True
+2025-09-28,Vallecano,Sevilla,draw,3.3,0.05581518764101978,away,-1.0,False
+2025-09-28,Barcelona,Sociedad,home,1.27,0.04596780414203083,home,0.27,True
+2025-09-30,Valencia,Oviedo,away,5.5,0.1315840336657661,away,4.5,True
+2025-10-03,Osasuna,Getafe,home,2.15,0.19118663288499027,home,1.15,True
+2025-10-04,Girona,Valencia,draw,3.5,0.1126862063503935,home,-1.0,False
+2025-10-04,Oviedo,Levante,home,2.5,0.16879651664038842,away,-1.0,False
+2025-10-04,Real Madrid,Villarreal,away,6.0,0.24462573220580763,home,-1.0,False
+2025-10-05,Sociedad,Vallecano,draw,3.6,0.06081019992580061,away,-1.0,False
+2025-10-05,Sevilla,Barcelona,draw,5.25,0.07656934242605451,home,-1.0,False
+2025-10-05,Espanol,Betis,away,2.63,0.1507957288461601,away,1.63,True
+2025-10-05,Celta,Ath Madrid,draw,3.8,0.061759845589994145,draw,2.8,True
+2025-10-05,Alaves,Elche,home,2.3,0.17352015670871546,home,1.2999999999999998,True
+2025-10-17,Oviedo,Espanol,home,3.0,0.23359154769412638,away,-1.0,False
+2025-10-18,Ath Madrid,Osasuna,away,8.5,0.09830253048879234,home,-1.0,False
+2025-10-18,Villarreal,Betis,away,4.0,0.1570287196295621,draw,-1.0,False
+2025-10-19,Levante,Vallecano,home,2.88,0.12251410460825829,away,-1.0,False
+2025-10-19,Getafe,Real Madrid,away,1.42,0.04607703066064994,away,0.41999999999999993,True
+2025-10-19,Elche,Ath Bilbao,away,2.1,0.14273711357121144,draw,-1.0,False
+2025-10-19,Celta,Sociedad,home,2.1,0.06985767399763487,draw,-1.0,False
+2025-10-24,Sociedad,Sevilla,draw,3.5,0.14824051173518749,home,-1.0,False
+2025-10-25,Ath Bilbao,Getafe,home,1.67,0.14206893453579883,away,-1.0,False
+2025-10-25,Espanol,Elche,home,1.95,0.10159008321562424,home,0.95,True
+2025-10-25,Girona,Oviedo,away,4.75,0.18329716907331473,draw,-1.0,False
+2025-10-25,Valencia,Villarreal,away,2.2,0.06136578334136766,away,1.2000000000000002,True
+2025-10-26,Vallecano,Alaves,home,2.1,0.04815619140806615,home,1.1,True
+2025-10-26,Real Madrid,Barcelona,away,3.3,0.2657827105190236,home,-1.0,False
+2025-10-26,Mallorca,Levante,draw,3.3,0.031132960215708216,draw,2.3,True
+2025-10-26,Osasuna,Celta,home,2.35,0.09161811035626033,away,-1.0,False
+2025-11-01,Sociedad,Ath Bilbao,away,2.8,0.22521222558650922,home,-1.0,False
+2025-11-01,Villarreal,Vallecano,home,1.7,0.0630458897809274,home,0.7,True
+2025-11-02,Levante,Celta,draw,3.4,0.14470951185756897,away,-1.0,False
+2025-11-02,Alaves,Espanol,home,2.38,0.053877995428768255,home,1.38,True
+2025-11-03,Oviedo,Osasuna,home,3.0,0.08562195751654778,draw,-1.0,False
+2025-11-07,Elche,Sociedad,draw,3.2,0.07924383046150196,draw,2.2,True
+2025-11-08,Espanol,Villarreal,away,2.38,0.29229488033467743,away,1.38,True
+2025-11-08,Girona,Alaves,draw,3.25,0.037513649622091805,home,-1.0,False
+2025-11-08,Sevilla,Osasuna,away,3.5,0.05856310024712563,home,-1.0,False
+2025-11-09,Vallecano,Real Madrid,away,1.5,0.12609427419869101,draw,-1.0,False
+2025-11-09,Valencia,Betis,draw,3.4,0.0519304409014274,draw,2.4,True
+2025-11-09,Celta,Barcelona,away,1.65,0.10032972350613312,away,0.6499999999999999,True
+2025-11-09,Ath Bilbao,Oviedo,away,8.0,0.07516487868086497,home,-1.0,False
+2025-11-09,Mallorca,Getafe,home,2.5,0.06751568288585741,home,1.5,True
+2025-11-21,Valencia,Levante,home,2.0,0.06167355650241979,home,1.0,True
+2025-11-22,Villarreal,Mallorca,home,1.44,0.06427370642094532,home,0.43999999999999995,True
+2025-11-22,Osasuna,Sociedad,home,2.8,0.2536995637290407,away,-1.0,False
+2025-11-23,Elche,Real Madrid,away,1.38,0.034991585380102164,draw,-1.0,False
+2025-11-23,Oviedo,Vallecano,home,3.5,0.38261300571264445,draw,-1.0,False
+2025-11-23,Getafe,Ath Madrid,away,1.73,0.03275206476416592,away,0.73,True
+2025-11-23,Betis,Girona,draw,4.33,0.059451427180527316,draw,3.33,True
+2025-11-28,Getafe,Elche,home,2.25,0.11358296304104787,home,1.25,True
+2025-11-29,Ath Madrid,Oviedo,away,17.0,0.3643073907417813,home,-1.0,False
+2025-11-29,Levante,Ath Bilbao,away,2.15,0.04231102968033462,away,1.15,True
+2025-11-30,Girona,Real Madrid,draw,5.25,0.037739004911171214,draw,4.25,True
+2025-11-30,Sevilla,Betis,away,2.38,0.0857671522543264,away,1.38,True
+2025-11-30,Sociedad,Villarreal,away,2.45,0.29291862031905924,away,1.4500000000000002,True
+2025-12-03,Ath Bilbao,Real Madrid,away,1.8,0.15723969255004588,away,0.8,True
+2025-12-05,Oviedo,Mallorca,home,2.55,0.14587607043975237,draw,-1.0,False
+2025-12-06,Betis,Barcelona,away,1.73,0.06764419335162941,away,0.73,True
+2025-12-06,Villarreal,Getafe,home,1.62,0.23579362367987056,home,0.6200000000000001,True
+2025-12-06,Ath Bilbao,Ath Madrid,away,2.25,0.13890021650826312,home,-1.0,False
+2025-12-07,Valencia,Sevilla,home,2.15,0.08302579105213503,draw,-1.0,False
+2025-12-07,Real Madrid,Celta,home,1.3,0.06262747565829407,away,-1.0,False
+2025-12-07,Elche,Girona,draw,3.3,0.15205198775382156,home,-1.0,False
+2025-12-07,Espanol,Vallecano,home,2.25,0.03761585064365902,home,1.25,True
+2025-12-08,Osasuna,Levante,draw,3.8,0.05832874066983229,home,-1.0,False
+2025-12-12,Sociedad,Girona,draw,3.9,0.11097202782517446,away,-1.0,False
+2025-12-13,Ath Madrid,Valencia,away,11.0,0.16018517795430798,home,-1.0,False
+2025-12-13,Mallorca,Elche,home,2.45,0.1317599519850563,home,1.4500000000000002,True
+2025-12-14,Alaves,Real Madrid,away,1.6,0.17577971417887617,away,0.6000000000000001,True
+2025-12-15,Vallecano,Betis,away,2.75,0.17572417156339792,draw,-1.0,False
+2025-12-20,Levante,Sociedad,draw,3.4,0.2529996254506859,draw,2.4,True
+2025-12-20,Osasuna,Alaves,home,2.2,0.10147319709338465,home,1.2000000000000002,True
+2025-12-20,Oviedo,Celta,draw,3.4,0.059620065036948056,draw,2.4,True
+2025-12-21,Villarreal,Barcelona,draw,4.75,0.10145444899557177,away,-1.0,False
+2025-12-21,Betis,Getafe,home,1.7,0.14690725631192025,home,0.7,True
+2025-12-22,Ath Bilbao,Espanol,away,5.0,0.04323292327535255,away,4.0,True
+2026-01-02,Vallecano,Getafe,home,2.05,0.13557594153695063,draw,-1.0,False
+2026-01-03,Celta,Valencia,home,2.0,0.08649865367830656,home,1.0,True
+2026-01-03,Elche,Villarreal,away,2.2,0.2148974100979648,away,1.2000000000000002,True
+2026-01-03,Espanol,Barcelona,away,1.5,0.12826744782942412,away,0.5,True
+2026-01-03,Osasuna,Ath Bilbao,home,3.0,0.1090245322581136,draw,-1.0,False
+2026-01-04,Sociedad,Ath Madrid,away,1.91,0.07151251096995992,draw,-1.0,False
+2026-01-04,Mallorca,Girona,home,2.25,0.1352881949209257,away,-1.0,False
+2026-01-04,Alaves,Oviedo,away,5.25,0.11623342310885665,draw,-1.0,False
+2026-01-09,Getafe,Sociedad,home,3.3,0.16264631408492103,away,-1.0,False
+2026-01-10,Girona,Osasuna,draw,3.25,0.07563290514154697,home,-1.0,False
+2026-01-10,Oviedo,Betis,draw,3.5,0.03657695161511931,draw,2.5,True
+2026-01-10,Valencia,Elche,draw,3.2,0.08549797429625072,draw,2.2,True
+2026-01-10,Villarreal,Alaves,home,1.45,0.08565684781185245,home,0.44999999999999996,True
+2026-01-11,Levante,Espanol,home,3.1,0.08026449623810628,draw,-1.0,False
+2026-01-12,Sevilla,Celta,draw,3.3,0.11873820728537487,away,-1.0,False
+2026-01-17,Betis,Villarreal,away,2.63,0.16477602317191287,home,-1.0,False
+2026-01-17,Mallorca,Ath Bilbao,home,3.8,0.2346704996083695,home,2.8,True
+2026-01-18,Celta,Vallecano,home,2.05,0.18171495659602765,home,1.0499999999999998,True
+2026-01-18,Sociedad,Barcelona,away,1.55,0.12088720919211626,home,-1.0,False
+2026-01-19,Elche,Sevilla,draw,3.3,0.08837540602522087,draw,2.3,True
+2026-01-23,Levante,Elche,draw,3.3,0.20673280271539984,home,-1.0,False
+2026-01-24,Villarreal,Real Madrid,away,2.0,0.09067427386929938,away,1.0,True
+2026-01-24,Vallecano,Osasuna,away,3.6,0.03179244277857385,away,2.6,True
+2026-01-24,Sevilla,Ath Bilbao,away,2.63,0.05508599420723059,home,-1.0,False
+2026-01-24,Valencia,Espanol,home,2.45,0.0705686120568294,home,1.4500000000000002,True
+2026-01-25,Alaves,Betis,away,2.7,0.25427365886055386,home,-1.0,False
+2026-01-25,Sociedad,Celta,away,3.9,0.2992821806173116,home,-1.0,False
+2026-01-26,Girona,Getafe,home,2.1,0.12331009364117218,draw,-1.0,False
+2026-01-31,Oviedo,Girona,home,2.75,0.05261369069706623,home,1.75,True
+2026-01-31,Osasuna,Villarreal,away,2.55,0.3382093130904844,draw,-1.0,False
+2026-01-31,Elche,Barcelona,draw,5.75,0.19948029335911954,away,-1.0,False
+2026-02-01,Ath Bilbao,Sociedad,home,2.3,0.11736481375882035,draw,-1.0,False
+2026-02-01,Betis,Valencia,home,1.83,0.08118079546946877,home,0.8300000000000001,True
+2026-02-01,Getafe,Celta,away,2.8,0.1058294134260993,draw,-1.0,False
+2026-02-01,Real Madrid,Vallecano,home,1.25,0.06581176263529143,home,0.25,True
+2026-02-02,Mallorca,Sevilla,home,2.4,0.12244522664051938,home,1.4,True
+2026-02-07,Barcelona,Mallorca,draw,9.0,0.11673451277904756,home,-1.0,False
+2026-02-07,Sociedad,Elche,draw,4.0,0.08353652912967635,home,-1.0,False
+2026-02-08,Valencia,Real Madrid,away,1.55,0.11376181926595597,away,0.55,True
+2026-02-08,Sevilla,Girona,draw,3.3,0.12988230319566885,draw,2.3,True
+2026-02-08,Alaves,Getafe,home,2.3,0.14385712699813547,away,-1.0,False
+2026-02-08,Ath Madrid,Betis,away,6.25,0.28193721947361006,away,5.25,True
+2026-02-09,Villarreal,Espanol,home,1.7,0.1429062196602071,home,0.7,True
+2026-02-13,Elche,Osasuna,draw,3.3,0.2434520350002023,draw,2.3,True
+2026-02-14,Espanol,Celta,draw,3.2,0.044299206146989345,draw,2.2,True
+2026-02-14,Getafe,Villarreal,away,2.25,0.3327971370852876,home,-1.0,False
+2026-02-14,Real Madrid,Sociedad,home,1.33,0.04493649278147949,home,0.33000000000000007,True
+2026-02-15,Levante,Valencia,draw,3.25,0.09400275365411193,away,-1.0,False
+2026-02-15,Mallorca,Betis,away,2.45,0.08803579669671158,away,1.4500000000000002,True
+2026-02-18,Levante,Villarreal,away,1.8,0.11242167605716236,away,0.8,True
+2026-02-20,Ath Bilbao,Elche,home,1.67,0.06002088764838942,home,0.6699999999999999,True
+2026-02-21,Betis,Vallecano,home,1.9,0.13257950051209,draw,-1.0,False
+2026-02-21,Osasuna,Real Madrid,away,1.7,0.19977114955623798,home,-1.0,False
+2026-02-21,Sociedad,Oviedo,away,7.5,0.26056771348672014,draw,-1.0,False
+2026-02-22,Villarreal,Valencia,home,1.7,0.16337213846531085,home,0.7,True
+2026-02-22,Barcelona,Levante,draw,11.0,0.06663460191041537,home,-1.0,False
+2026-02-22,Getafe,Sevilla,home,2.35,0.10108167629029285,away,-1.0,False
+2026-02-23,Alaves,Girona,away,3.5,0.06622636806150317,draw,-1.0,False
+2026-02-27,Levante,Alaves,draw,3.1,0.10452456005170196,home,-1.0,False
+2026-02-28,Barcelona,Villarreal,away,7.0,0.3680062568798175,home,-1.0,False
+2026-02-28,Mallorca,Sociedad,draw,3.3,0.17124743645542972,away,-1.0,False
+2026-02-28,Vallecano,Ath Bilbao,away,3.2,0.10483216672535,draw,-1.0,False
+2026-03-01,Betis,Sevilla,home,1.75,0.15770053685567098,draw,-1.0,False
+2026-03-01,Elche,Espanol,draw,3.3,0.17465772041911554,draw,2.3,True
+2026-03-02,Real Madrid,Getafe,home,1.3,0.10822400733760995,away,-1.0,False
+2026-03-04,Vallecano,Oviedo,draw,3.75,0.05194592882816029,home,-1.0,False
+2026-03-06,Celta,Real Madrid,away,2.3,0.47310445337876983,away,1.2999999999999998,True
+2026-03-07,Ath Bilbao,Barcelona,away,1.62,0.09069009883309898,away,0.6200000000000001,True
+2026-03-07,Levante,Girona,draw,3.4,0.18296963415930545,draw,2.4,True
+2026-03-08,Villarreal,Elche,home,1.5,0.11408049548542043,home,0.5,True
+2026-03-08,Valencia,Alaves,home,2.05,0.10075810370289817,home,1.0499999999999998,True
+2026-03-08,Sevilla,Vallecano,draw,3.1,0.09724106465354354,draw,2.1,True
+2026-03-08,Getafe,Betis,away,2.8,0.31862496386395733,home,-1.0,False
+2026-03-09,Espanol,Oviedo,draw,3.4,0.0978224761772839,draw,2.4,True
+2026-03-13,Alaves,Villarreal,away,2.2,0.2184195683910286,draw,-1.0,False
+2026-03-14,Ath Madrid,Getafe,home,1.57,0.12173373624634665,home,0.5700000000000001,True
+2026-03-14,Girona,Ath Bilbao,draw,3.4,0.07228288895582535,home,-1.0,False
+2026-03-14,Oviedo,Valencia,draw,3.2,0.09910333823172168,home,-1.0,False
+2026-03-14,Real Madrid,Elche,home,1.33,0.14507232283110194,home,0.33000000000000007,True
+2026-03-15,Sociedad,Osasuna,away,4.33,0.05885774936283483,home,-1.0,False
+2026-03-15,Betis,Celta,home,2.2,0.03546503923292632,draw,-1.0,False
+2026-03-15,Barcelona,Sevilla,home,1.25,0.061335240167533334,home,0.25,True
+2026-03-15,Mallorca,Espanol,draw,3.2,0.07632808203076391,home,-1.0,False
+2026-03-16,Vallecano,Levante,home,1.7,0.0683370089560853,draw,-1.0,False
+2026-03-20,Villarreal,Sociedad,home,1.91,0.03549312924751491,home,0.9099999999999999,True
+2026-03-21,Elche,Mallorca,draw,3.3,0.13801001838088323,home,-1.0,False
+2026-03-21,Espanol,Getafe,home,2.35,0.08668559888880889,away,-1.0,False
+2026-03-21,Levante,Oviedo,draw,3.3,0.06179248366627332,home,-1.0,False
+2026-03-21,Osasuna,Girona,draw,3.4,0.0677300296157306,home,-1.0,False
+2026-03-21,Sevilla,Valencia,draw,3.2,0.06204207075945045,away,-1.0,False
+2026-03-22,Ath Bilbao,Betis,away,3.25,0.24031299969400322,home,-1.0,False
+2026-03-22,Celta,Alaves,home,1.83,0.06661932785792923,away,-1.0,False
+2026-03-22,Real Madrid,Ath Madrid,home,1.95,0.18839419764754806,home,0.95,True
+2026-04-03,Vallecano,Elche,draw,3.9,0.05606693744823965,home,-1.0,False
+2026-04-04,Mallorca,Real Madrid,away,1.57,0.17210460971727337,home,-1.0,False
+2026-04-04,Ath Madrid,Barcelona,away,2.15,0.24728111221249272,away,1.15,True
+2026-04-04,Sociedad,Levante,draw,4.2,0.23175356782236012,home,-1.0,False
+2026-04-05,Valencia,Celta,away,3.2,0.06410263595580679,away,2.2,True
+2026-04-05,Oviedo,Sevilla,home,2.8,0.11911908471826504,home,1.7999999999999998,True
+2026-04-05,Alaves,Osasuna,draw,3.2,0.0456635338661866,draw,2.2,True
+2026-04-05,Getafe,Ath Bilbao,home,3.0,0.09305579353819327,home,2.0,True
+2026-04-06,Girona,Villarreal,away,2.2,0.08753858586508612,home,-1.0,False
+2026-04-11,Barcelona,Espanol,home,1.29,0.08763331381432637,home,0.29000000000000004,True
+2026-04-11,Elche,Valencia,draw,3.3,0.1800022381643256,home,-1.0,False
+2026-04-11,Sevilla,Ath Madrid,away,2.8,0.6073499535207478,home,-1.0,False
+2026-04-11,Sociedad,Alaves,draw,3.7,0.07477293318109246,draw,2.7,True
+2026-04-12,Osasuna,Betis,away,3.3,0.19203926379318048,draw,-1.0,False
+2026-04-12,Ath Bilbao,Villarreal,away,3.1,0.4661654108626676,away,2.1,True
+2026-04-12,Celta,Oviedo,home,1.7,0.0433914686668857,away,-1.0,False
+2026-04-21,Ath Bilbao,Osasuna,away,4.5,0.20561011020981912,home,-1.0,False
+2026-04-21,Girona,Betis,away,3.0,0.09028196363077656,away,2.0,True
+2026-04-21,Mallorca,Valencia,home,2.6,0.13498740314984858,draw,-1.0,False
+2026-04-21,Real Madrid,Alaves,draw,6.5,0.08906976642788722,home,-1.0,False
+2026-04-22,Elche,Ath Madrid,away,2.45,0.51058663624032,home,-1.0,False
+2026-04-22,Sociedad,Getafe,home,2.3,0.21435488218190257,away,-1.0,False
+2026-04-23,Vallecano,Espanol,home,2.1,0.048083422540466936,home,1.1,True
+2026-04-23,Oviedo,Villarreal,away,2.05,0.14879479456472056,draw,-1.0,False
+2026-04-24,Betis,Real Madrid,away,1.85,0.11937875368967976,draw,-1.0,False
+2026-04-25,Alaves,Mallorca,draw,3.0,0.08237273763513975,home,-1.0,False
+2026-04-25,Ath Madrid,Ath Bilbao,home,2.2,0.3855659368674116,home,1.2000000000000002,True
+2026-04-25,Getafe,Barcelona,away,1.67,0.2562804012602844,away,0.6699999999999999,True
+2026-04-25,Valencia,Girona,draw,3.4,0.061110453479991333,home,-1.0,False
+2026-04-26,Osasuna,Sevilla,home,2.05,0.15909432603642149,home,1.0499999999999998,True
+2026-04-26,Oviedo,Elche,home,2.4,0.20212791087897353,away,-1.0,False
+2026-04-26,Villarreal,Celta,home,2.05,0.23244025274652724,home,1.0499999999999998,True
+2026-04-27,Espanol,Levante,draw,3.4,0.16264905907981642,draw,2.4,True
+2026-05-01,Girona,Mallorca,draw,3.4,0.06612902406224941,away,-1.0,False
+2026-05-02,Valencia,Ath Madrid,away,4.0,1.133360693888215,away,3.0,True
+2026-05-02,Alaves,Ath Bilbao,draw,3.4,0.09506888781542266,away,-1.0,False
+2026-05-02,Osasuna,Barcelona,away,1.7,0.24187229821001255,away,0.7,True
+2026-05-02,Villarreal,Levante,home,1.7,0.23835368089142017,home,0.7,True
+2026-05-03,Getafe,Vallecano,away,4.2,0.18433584912400724,away,3.2,True
+2026-05-03,Espanol,Real Madrid,away,1.73,0.24314442963437477,away,0.73,True
+2026-05-03,Celta,Elche,draw,3.8,0.1372311960902306,home,-1.0,False
+2026-05-04,Sevilla,Sociedad,draw,3.5,0.18307969610398733,home,-1.0,False
+2026-05-08,Levante,Osasuna,away,2.88,0.08819362942544928,home,-1.0,False
+2026-05-09,Ath Madrid,Celta,home,2.05,0.28219603133600724,away,-1.0,False
+2026-05-09,Elche,Alaves,draw,3.3,0.13475721249326922,draw,2.3,True
+2026-05-09,Sociedad,Betis,draw,3.5,0.0784659645794008,draw,2.5,True
+2026-05-10,Oviedo,Getafe,home,3.0,0.24343995421416964,draw,-1.0,False
+2026-05-10,Mallorca,Villarreal,away,3.0,0.6588387641347266,draw,-1.0,False
+2026-05-10,Barcelona,Real Madrid,away,4.33,0.5076208092463881,home,-1.0,False
+2026-05-11,Vallecano,Girona,home,2.3,0.07654015651804924,draw,-1.0,False
+2026-05-12,Betis,Elche,home,1.57,0.06486258735260231,home,0.5700000000000001,True
+2026-05-12,Celta,Levante,home,1.8,0.049413305156294385,away,-1.0,False
+2026-05-12,Osasuna,Ath Madrid,away,2.63,0.23763791083403385,away,1.63,True
+2026-05-13,Villarreal,Sevilla,home,2.1,0.5556863400940513,away,-1.0,False
+2026-05-13,Espanol,Ath Bilbao,draw,3.3,0.10237638575804264,home,-1.0,False
+2026-05-13,Alaves,Barcelona,away,2.15,0.6137259342547223,home,-1.0,False
+2026-05-14,Girona,Sociedad,draw,3.8,0.25053055326196594,draw,2.8,True
+2026-05-17,Ath Madrid,Girona,home,1.73,0.13526438983388722,home,0.73,True
+2026-05-17,Barcelona,Betis,away,7.5,0.051944915939429404,home,-1.0,False
+2026-05-17,Elche,Getafe,away,3.4,0.03173577470062172,home,-1.0,False
+2026-05-17,Levante,Mallorca,draw,3.4,0.05946095454681144,home,-1.0,False
+2026-05-17,Osasuna,Espanol,home,2.05,0.13717615341223133,away,-1.0,False
+2026-05-17,Oviedo,Alaves,home,3.7,0.4284770785277605,away,-1.0,False
+2026-05-17,Sevilla,Real Madrid,away,2.15,0.5112093218737861,away,1.15,True
+2026-05-17,Sociedad,Valencia,home,2.15,0.10693504213061522,away,-1.0,False
+2026-05-17,Vallecano,Villarreal,away,2.63,0.2817570452129705,home,-1.0,False
+2026-05-23,Mallorca,Oviedo,away,7.0,0.43493734106598847,home,-1.0,False
+2026-05-23,Girona,Elche,draw,3.9,0.11604492806671618,draw,2.9,True
+2026-05-23,Real Madrid,Ath Bilbao,home,1.5,0.10643033151648318,home,0.5,True
+2026-05-23,Valencia,Barcelona,away,1.85,0.3959194564898878,home,-1.0,False
+2026-05-23,Celta,Sevilla,draw,3.8,0.07894504171010808,home,-1.0,False
+2026-05-23,Betis,Levante,home,2.25,0.382821344014153,home,1.25,True
+2026-05-23,Alaves,Vallecano,draw,3.4,0.07676389724545563,away,-1.0,False
+2026-05-23,Espanol,Sociedad,draw,3.5,0.14837343689806914,draw,2.5,True
+2026-05-24,Villarreal,Ath Madrid,home,2.45,0.08659140970981816,home,1.4500000000000002,True
