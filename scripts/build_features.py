@@ -34,6 +34,7 @@ for _, match in matches.iterrows():
 
     home_form = form.get_form_features(home_team)
     away_form = form.get_form_features(away_team)
+
     home_attack_defense = attack_defense.get_features(home_team)
     away_attack_defense = attack_defense.get_features(away_team)
 
@@ -63,15 +64,16 @@ for _, match in matches.iterrows():
         "AwayFormGoalsFor": away_form["form_goals_for"],
         "HomeFormGoalsAgainst": home_form["form_goals_against"],
         "AwayFormGoalsAgainst": away_form["form_goals_against"],
+
         "HomeAttackRating": home_attack_defense["attack_rating"],
-"AwayAttackRating": away_attack_defense["attack_rating"],
-"HomeDefenseRating": home_attack_defense["defense_rating"],
-"AwayDefenseRating": away_attack_defense["defense_rating"],
-"HomeGoalDiffRating": home_attack_defense["goal_diff_rating"],
-"AwayGoalDiffRating": away_attack_defense["goal_diff_rating"],
-"AttackRatingDiff": home_attack_defense["attack_rating"] - away_attack_defense["attack_rating"],
-"DefenseRatingDiff": home_attack_defense["defense_rating"] - away_attack_defense["defense_rating"],
-"GoalDiffRatingDiff": home_attack_defense["goal_diff_rating"] - away_attack_defense["goal_diff_rating"],
+        "AwayAttackRating": away_attack_defense["attack_rating"],
+        "HomeDefenseRating": home_attack_defense["defense_rating"],
+        "AwayDefenseRating": away_attack_defense["defense_rating"],
+        "HomeGoalDiffRating": home_attack_defense["goal_diff_rating"],
+        "AwayGoalDiffRating": away_attack_defense["goal_diff_rating"],
+        "AttackRatingDiff": home_attack_defense["attack_rating"] - away_attack_defense["attack_rating"],
+        "DefenseRatingDiff": home_attack_defense["defense_rating"] - away_attack_defense["defense_rating"],
+        "GoalDiffRatingDiff": home_attack_defense["goal_diff_rating"] - away_attack_defense["goal_diff_rating"],
 
         "Result": result
     })
