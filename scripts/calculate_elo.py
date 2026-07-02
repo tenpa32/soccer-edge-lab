@@ -30,3 +30,6 @@ print("===================================")
 print("Final La Liga Elo Ratings")
 print("===================================")
 print(ratings)
+ratings.to_csv("data/processed/elo_ratings.csv", index=False)
+
+print("\nSaved Elo ratings to data/processed/elo_ratings.csv")
