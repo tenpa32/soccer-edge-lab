@@ -27,6 +27,15 @@ feature_columns = [
     "FormPointDiff",
     "FormGoalsForDiff",
     "FormGoalsAgainstDiff",
+    "HomeAttackRating",
+    "AwayAttackRating",
+    "HomeDefenseRating",
+    "AwayDefenseRating",
+    "HomeGoalDiffRating",
+    "AwayGoalDiffRating",
+    "AttackRatingDiff",
+    "DefenseRatingDiff",
+    "GoalDiffRatingDiff",
 ]
 
 X_train = train[feature_columns]

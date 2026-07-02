@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.elo import EloRating
 from core.form_engine import FormEngine
 from core.home_away_elo import HomeAwayElo
+from core.attack_defense import AttackDefenseEngine
 
 matches = pd.read_csv("data/processed/la_liga_clean_matches.csv")
 matches["Date"] = pd.to_datetime(matches["Date"])
@@ -15,6 +16,7 @@ matches = matches.sort_values("Date")
 elo = EloRating(initial_rating=1500, k_factor=20)
 home_away_elo = HomeAwayElo(initial_rating=1500, k_factor=20)
 form = FormEngine(window=5)
+attack_defense = AttackDefenseEngine(window=5)
 
 feature_rows = []
 
@@ -32,6 +34,8 @@ for _, match in matches.iterrows():
 
     home_form = form.get_form_features(home_team)
     away_form = form.get_form_features(away_team)
+    home_attack_defense = attack_defense.get_features(home_team)
+    away_attack_defense = attack_defense.get_features(away_team)
 
     if home_goals > away_goals:
         result = 2
@@ -59,6 +63,15 @@ for _, match in matches.iterrows():
         "AwayFormGoalsFor": away_form["form_goals_for"],
         "HomeFormGoalsAgainst": home_form["form_goals_against"],
         "AwayFormGoalsAgainst": away_form["form_goals_against"],
+        "HomeAttackRating": home_attack_defense["attack_rating"],
+"AwayAttackRating": away_attack_defense["attack_rating"],
+"HomeDefenseRating": home_attack_defense["defense_rating"],
+"AwayDefenseRating": away_attack_defense["defense_rating"],
+"HomeGoalDiffRating": home_attack_defense["goal_diff_rating"],
+"AwayGoalDiffRating": away_attack_defense["goal_diff_rating"],
+"AttackRatingDiff": home_attack_defense["attack_rating"] - away_attack_defense["attack_rating"],
+"DefenseRatingDiff": home_attack_defense["defense_rating"] - away_attack_defense["defense_rating"],
+"GoalDiffRatingDiff": home_attack_defense["goal_diff_rating"] - away_attack_defense["goal_diff_rating"],
 
         "Result": result
     })
@@ -66,6 +79,7 @@ for _, match in matches.iterrows():
     elo.update_match(home_team, away_team, home_goals, away_goals)
     home_away_elo.update_match(home_team, away_team, home_goals, away_goals)
     form.update_match(home_team, away_team, home_goals, away_goals)
+    attack_defense.update_match(home_team, away_team, home_goals, away_goals)
 
 features = pd.DataFrame(feature_rows)
 
