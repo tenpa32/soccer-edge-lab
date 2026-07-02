@@ -7,7 +7,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from core.elo import EloRating
 from core.form_engine import FormEngine
 
-matches = pd.read_csv("data/raw/EPL_2025.csv")
+matches = pd.read_csv("data/processed/la_liga_clean_matches.csv")
+matches["Date"] = pd.to_datetime(matches["Date"])
+matches = matches.sort_values("Date")
 
 elo = EloRating(initial_rating=1500, k_factor=20)
 form = FormEngine(window=5)
