@@ -32,6 +32,7 @@ DATA_DIR = Path("data/processed")
 BETS_FILE = DATA_DIR / "best_strategy_bets_v1.csv"
 SEASON_FILE = DATA_DIR / "best_strategy_season_summary_v1.csv"
 MODEL_FILE = DATA_DIR / "best_strategy_model_summary_v1.csv"
+GRID_FILE = DATA_DIR / "walk_forward_grid_search_v1.csv"
 
 # =========================
 # Load Data
@@ -40,6 +41,7 @@ MODEL_FILE = DATA_DIR / "best_strategy_model_summary_v1.csv"
 @st.cache_data
 def load_csv(path):
     return pd.read_csv(path)
+
 
 missing_files = []
 
@@ -60,6 +62,11 @@ bets = load_csv(BETS_FILE)
 season_results = load_csv(SEASON_FILE)
 model_summary = load_csv(MODEL_FILE)
 
+if GRID_FILE.exists():
+    grid_results = load_csv(GRID_FILE)
+else:
+    grid_results = None
+
 # =========================
 # Helpers
 # =========================
@@ -77,6 +84,16 @@ def format_percent(value):
 
 def format_units(value):
     return f"{value:+.2f} units"
+
+
+def parse_percent_column(series):
+    if series.dtype == object:
+        return (
+            series.astype(str)
+            .str.replace("%", "", regex=False)
+            .astype(float) / 100
+        )
+    return series
 
 
 # =========================
@@ -238,10 +255,11 @@ main_metrics = calculate_metrics(filtered_bets)
 # Tabs
 # =========================
 
-tab_overview, tab_model, tab_strategy, tab_simulator, tab_bets, tab_risk = st.tabs([
+tab_overview, tab_model, tab_strategy, tab_comparison, tab_simulator, tab_bets, tab_risk = st.tabs([
     "🏠 Overview",
     "🤖 Model Performance",
     "📊 Strategy Results",
+    "🏁 Strategy Comparison",
     "🧪 Strategy Simulator",
     "🎯 Bet Explorer",
     "⚠️ Risk / Drawdown"
@@ -431,7 +449,229 @@ with tab_strategy:
         st.plotly_chart(fig_bets, use_container_width=True)
 
 # =========================
-# Tab 4: Strategy Simulator
+# Tab 4: Strategy Comparison
+# =========================
+
+with tab_comparison:
+    st.header("🏁 Strategy Comparison")
+
+    st.write(
+        "Compare grid-search strategies across EV thresholds and odds bands. "
+        "This helps identify which strategy is strongest and whether the current best strategy is robust."
+    )
+
+    if grid_results is None:
+        st.warning(
+            "Grid-search results file not found yet. "
+            "Create this file first: data/processed/walk_forward_grid_search_v1.csv"
+        )
+
+        st.code(
+            "python scripts/walk_forward_grid_search.py",
+            language="powershell"
+        )
+
+    else:
+        st.subheader("Raw Grid Search Results")
+
+        st.dataframe(
+            grid_results,
+            use_container_width=True
+        )
+
+        grid_ev_col = find_column(grid_results, [
+            "EV Threshold", "EVThreshold", "ev_threshold", "MinimumEV", "MinEV"
+        ])
+
+        grid_min_odds_col = find_column(grid_results, [
+            "Min Odds", "MinOdds", "min_odds", "MinimumOdds", "Minimum Odds"
+        ])
+
+        grid_max_odds_col = find_column(grid_results, [
+            "Max Odds", "MaxOdds", "max_odds", "MaximumOdds", "Maximum Odds"
+        ])
+
+        grid_bets_col = find_column(grid_results, [
+            "Total Bets", "TotalBets", "Bets", "bets"
+        ])
+
+        grid_profit_col = find_column(grid_results, [
+            "Profit", "profit", "TotalProfit", "Total Profit"
+        ])
+
+        grid_roi_col = find_column(grid_results, [
+            "ROI", "roi"
+        ])
+
+        grid_winrate_col = find_column(grid_results, [
+            "Win Rate", "WinRate", "win_rate"
+        ])
+
+        grid_drawdown_col = find_column(grid_results, [
+            "Max Drawdown", "MaxDrawdown", "max_drawdown"
+        ])
+
+        comparison = grid_results.copy()
+
+        if grid_roi_col:
+            comparison[grid_roi_col] = parse_percent_column(comparison[grid_roi_col])
+
+        if grid_winrate_col:
+            comparison[grid_winrate_col] = parse_percent_column(comparison[grid_winrate_col])
+
+        if grid_bets_col:
+            max_bets = int(comparison[grid_bets_col].max())
+        else:
+            max_bets = 500
+
+        minimum_bets_filter = st.slider(
+            "Minimum Bets Required",
+            min_value=0,
+            max_value=max_bets,
+            value=min(100, max_bets),
+            step=10
+        )
+
+        if grid_bets_col:
+            comparison = comparison[comparison[grid_bets_col] >= minimum_bets_filter]
+
+        if len(comparison) == 0:
+            st.warning("No strategies match the minimum bets filter.")
+
+        else:
+            if grid_roi_col and grid_profit_col:
+                comparison = comparison.sort_values(
+                    by=[grid_roi_col, grid_profit_col],
+                    ascending=False
+                )
+
+            elif grid_profit_col:
+                comparison = comparison.sort_values(
+                    by=grid_profit_col,
+                    ascending=False
+                )
+
+            top_strategy = comparison.iloc[0]
+
+            st.subheader("Best Strategy From Grid")
+
+            c1, c2, c3, c4 = st.columns(4)
+
+            with c1:
+                if grid_bets_col:
+                    st.metric("Bets", f"{int(top_strategy[grid_bets_col])}")
+                else:
+                    st.metric("Bets", "N/A")
+
+            with c2:
+                if grid_profit_col:
+                    st.metric("Profit", format_units(top_strategy[grid_profit_col]))
+                else:
+                    st.metric("Profit", "N/A")
+
+            with c3:
+                if grid_roi_col:
+                    st.metric("ROI", format_percent(top_strategy[grid_roi_col]))
+                else:
+                    st.metric("ROI", "N/A")
+
+            with c4:
+                if grid_drawdown_col:
+                    st.metric("Max Drawdown", f"{top_strategy[grid_drawdown_col]:.2f} units")
+                else:
+                    st.metric("Max Drawdown", "N/A")
+
+            c5, c6, c7 = st.columns(3)
+
+            with c5:
+                if grid_ev_col:
+                    st.metric("EV Threshold", f"{top_strategy[grid_ev_col]}")
+
+            with c6:
+                if grid_min_odds_col:
+                    st.metric("Min Odds", f"{top_strategy[grid_min_odds_col]}")
+
+            with c7:
+                if grid_max_odds_col:
+                    st.metric("Max Odds", f"{top_strategy[grid_max_odds_col]}")
+
+            st.subheader("Top Strategies")
+
+            st.dataframe(
+                comparison.head(20),
+                use_container_width=True
+            )
+
+            if grid_roi_col and grid_profit_col:
+                st.subheader("ROI vs Profit")
+
+                hover_cols = []
+
+                for col in [
+                    grid_ev_col,
+                    grid_min_odds_col,
+                    grid_max_odds_col,
+                    grid_bets_col,
+                    grid_winrate_col,
+                    grid_drawdown_col
+                ]:
+                    if col and col in comparison.columns:
+                        hover_cols.append(col)
+
+                fig_roi_profit = px.scatter(
+                    comparison,
+                    x=grid_roi_col,
+                    y=grid_profit_col,
+                    size=grid_bets_col if grid_bets_col else None,
+                    hover_data=hover_cols,
+                    title="Strategy ROI vs Profit"
+                )
+
+                st.plotly_chart(fig_roi_profit, use_container_width=True)
+
+            if grid_ev_col and grid_roi_col:
+                st.subheader("EV Threshold vs ROI")
+
+                fig_ev_roi = px.box(
+                    comparison,
+                    x=grid_ev_col,
+                    y=grid_roi_col,
+                    title="ROI Distribution by EV Threshold"
+                )
+
+                st.plotly_chart(fig_ev_roi, use_container_width=True)
+
+            if grid_min_odds_col and grid_max_odds_col and grid_profit_col:
+                st.subheader("Profit by Odds Band")
+
+                comparison["OddsBand"] = (
+                    comparison[grid_min_odds_col].astype(str)
+                    + " - "
+                    + comparison[grid_max_odds_col].astype(str)
+                )
+
+                odds_band_summary = (
+                    comparison
+                    .groupby("OddsBand")
+                    .agg(
+                        AverageProfit=(grid_profit_col, "mean"),
+                        Strategies=(grid_profit_col, "count")
+                    )
+                    .reset_index()
+                    .sort_values("AverageProfit", ascending=False)
+                )
+
+                fig_odds_band = px.bar(
+                    odds_band_summary,
+                    x="OddsBand",
+                    y="AverageProfit",
+                    title="Average Profit by Odds Band"
+                )
+
+                st.plotly_chart(fig_odds_band, use_container_width=True)
+
+# =========================
+# Tab 5: Strategy Simulator
 # =========================
 
 with tab_simulator:
@@ -604,7 +844,7 @@ with tab_simulator:
         st.warning("No bets match the selected simulator filters.")
 
 # =========================
-# Tab 5: Bet Explorer
+# Tab 6: Bet Explorer
 # =========================
 
 with tab_bets:
@@ -675,7 +915,7 @@ with tab_bets:
         st.plotly_chart(fig_ev_odds, use_container_width=True)
 
 # =========================
-# Tab 6: Risk / Drawdown
+# Tab 7: Risk / Drawdown
 # =========================
 
 with tab_risk:
@@ -768,3 +1008,7 @@ with st.expander("Developer Debug: Show detected columns"):
 
     st.write("Model summary columns:")
     st.write(list(model_summary.columns))
+
+    if grid_results is not None:
+        st.write("Grid search columns:")
+        st.write(list(grid_results.columns))
