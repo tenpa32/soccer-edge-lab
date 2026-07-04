@@ -255,12 +255,13 @@ main_metrics = calculate_metrics(filtered_bets)
 # Tabs
 # =========================
 
-tab_overview, tab_model, tab_strategy, tab_comparison, tab_simulator, tab_bets, tab_risk = st.tabs([
+tab_overview, tab_model, tab_strategy, tab_comparison, tab_simulator, tab_bankroll, tab_bets, tab_risk = st.tabs([
     "🏠 Overview",
     "🤖 Model Performance",
     "📊 Strategy Results",
     "🏁 Strategy Comparison",
     "🧪 Strategy Simulator",
+    "💰 Bankroll Simulator",
     "🎯 Bet Explorer",
     "⚠️ Risk / Drawdown"
 ])
@@ -844,7 +845,291 @@ with tab_simulator:
         st.warning("No bets match the selected simulator filters.")
 
 # =========================
-# Tab 6: Bet Explorer
+# Tab 6: Bankroll Simulator
+# =========================
+
+with tab_bankroll:
+    st.header("💰 Bankroll Simulator")
+
+    st.write(
+        "Simulate how the validated strategy performs under different staking plans. "
+        "This helps compare flat staking versus percentage bankroll staking."
+    )
+
+    bankroll_col1, bankroll_col2, bankroll_col3 = st.columns(3)
+
+    with bankroll_col1:
+        starting_bankroll = st.number_input(
+            "Starting Bankroll",
+            min_value=10.0,
+            max_value=100000.0,
+            value=100.0,
+            step=10.0
+        )
+
+    with bankroll_col2:
+        flat_stake = st.number_input(
+            "Flat Stake per Bet",
+            min_value=0.1,
+            max_value=1000.0,
+            value=1.0,
+            step=0.1
+        )
+
+    with bankroll_col3:
+        selected_pct_stake = st.slider(
+            "Percentage Stake",
+            min_value=0.01,
+            max_value=0.10,
+            value=0.02,
+            step=0.01,
+            format="%.0%%"
+        )
+
+    st.divider()
+
+    bankroll_bets = filtered_bets.copy()
+
+    if len(bankroll_bets) == 0:
+        st.warning("No bets match the current sidebar filters.")
+
+    else:
+        if date_col:
+            bankroll_bets = bankroll_bets.sort_values(date_col).reset_index(drop=True)
+        else:
+            bankroll_bets = bankroll_bets.reset_index(drop=True)
+
+        # =========================
+        # Flat Stake Simulation
+        # =========================
+
+        flat_rows = []
+        flat_bankroll = starting_bankroll
+        flat_peak = starting_bankroll
+
+        for i, row in bankroll_bets.iterrows():
+            odds = row[odds_col]
+            won = row[result_col]
+
+            stake = min(flat_stake, flat_bankroll)
+
+            if stake <= 0:
+                profit = 0
+            elif won:
+                profit = stake * (odds - 1)
+            else:
+                profit = -stake
+
+            flat_bankroll += profit
+            flat_peak = max(flat_peak, flat_bankroll)
+            drawdown = flat_peak - flat_bankroll
+
+            flat_rows.append({
+                "BetNumber": i + 1,
+                "Stake": stake,
+                "Profit": profit,
+                "Bankroll": flat_bankroll,
+                "Drawdown": drawdown,
+                "StakingPlan": "Flat Stake"
+            })
+
+        flat_sim = pd.DataFrame(flat_rows)
+
+        # =========================
+        # Selected Percentage Stake Simulation
+        # =========================
+
+        pct_rows = []
+        pct_bankroll = starting_bankroll
+        pct_peak = starting_bankroll
+
+        for i, row in bankroll_bets.iterrows():
+            odds = row[odds_col]
+            won = row[result_col]
+
+            stake = pct_bankroll * selected_pct_stake
+
+            if stake <= 0:
+                profit = 0
+            elif won:
+                profit = stake * (odds - 1)
+            else:
+                profit = -stake
+
+            pct_bankroll += profit
+            pct_peak = max(pct_peak, pct_bankroll)
+            drawdown = pct_peak - pct_bankroll
+
+            pct_rows.append({
+                "BetNumber": i + 1,
+                "Stake": stake,
+                "Profit": profit,
+                "Bankroll": pct_bankroll,
+                "Drawdown": drawdown,
+                "StakingPlan": f"{selected_pct_stake:.0%} Bankroll Stake"
+            })
+
+        pct_sim = pd.DataFrame(pct_rows)
+
+        # =========================
+        # Multiple Percentage Plans
+        # =========================
+
+        pct_plan_rows = []
+
+        for pct in [0.01, 0.02, 0.03, 0.05]:
+            bankroll = starting_bankroll
+            peak = starting_bankroll
+
+            for i, row in bankroll_bets.iterrows():
+                odds = row[odds_col]
+                won = row[result_col]
+
+                stake = bankroll * pct
+
+                if stake <= 0:
+                    profit = 0
+                elif won:
+                    profit = stake * (odds - 1)
+                else:
+                    profit = -stake
+
+                bankroll += profit
+                peak = max(peak, bankroll)
+                drawdown = peak - bankroll
+
+                pct_plan_rows.append({
+                    "BetNumber": i + 1,
+                    "Stake": stake,
+                    "Profit": profit,
+                    "Bankroll": bankroll,
+                    "Drawdown": drawdown,
+                    "StakingPlan": f"{pct:.0%} Bankroll Stake"
+                })
+
+        pct_plans_sim = pd.DataFrame(pct_plan_rows)
+
+        combined_sim = pd.concat([flat_sim, pct_plans_sim], ignore_index=True)
+
+        # =========================
+        # Summary Metrics
+        # =========================
+
+        flat_final_bankroll = flat_sim["Bankroll"].iloc[-1]
+        flat_profit = flat_final_bankroll - starting_bankroll
+        flat_roi = flat_profit / starting_bankroll
+        flat_max_drawdown = flat_sim["Drawdown"].max()
+
+        pct_final_bankroll = pct_sim["Bankroll"].iloc[-1]
+        pct_profit = pct_final_bankroll - starting_bankroll
+        pct_roi = pct_profit / starting_bankroll
+        pct_max_drawdown = pct_sim["Drawdown"].max()
+
+        st.subheader("Selected Staking Plan Comparison")
+
+        bm1, bm2, bm3, bm4 = st.columns(4)
+
+        with bm1:
+            st.metric("Flat Final Bankroll", f"{flat_final_bankroll:.2f}")
+
+        with bm2:
+            st.metric("Flat Profit", f"{flat_profit:+.2f}")
+
+        with bm3:
+            st.metric("Flat ROI", f"{flat_roi:.2%}")
+
+        with bm4:
+            st.metric("Flat Max Drawdown", f"{flat_max_drawdown:.2f}")
+
+        bm5, bm6, bm7, bm8 = st.columns(4)
+
+        with bm5:
+            st.metric("Percent Final Bankroll", f"{pct_final_bankroll:.2f}")
+
+        with bm6:
+            st.metric("Percent Profit", f"{pct_profit:+.2f}")
+
+        with bm7:
+            st.metric("Percent ROI", f"{pct_roi:.2%}")
+
+        with bm8:
+            st.metric("Percent Max Drawdown", f"{pct_max_drawdown:.2f}")
+
+        st.divider()
+
+        # =========================
+        # Bankroll Curves
+        # =========================
+
+        st.subheader("Bankroll Growth by Staking Plan")
+
+        fig_bankroll = px.line(
+            combined_sim,
+            x="BetNumber",
+            y="Bankroll",
+            color="StakingPlan",
+            title="Bankroll Growth Comparison"
+        )
+
+        st.plotly_chart(fig_bankroll, use_container_width=True)
+
+        st.subheader("Drawdown by Staking Plan")
+
+        fig_bankroll_drawdown = px.line(
+            combined_sim,
+            x="BetNumber",
+            y="Drawdown",
+            color="StakingPlan",
+            title="Drawdown Comparison"
+        )
+
+        st.plotly_chart(fig_bankroll_drawdown, use_container_width=True)
+
+        # =========================
+        # Staking Plan Summary Table
+        # =========================
+
+        st.subheader("Staking Plan Summary")
+
+        staking_summary = (
+            combined_sim
+            .groupby("StakingPlan")
+            .agg(
+                FinalBankroll=("Bankroll", "last"),
+                MaxDrawdown=("Drawdown", "max"),
+                AverageStake=("Stake", "mean"),
+                MaxStake=("Stake", "max")
+            )
+            .reset_index()
+        )
+
+        staking_summary["Profit"] = staking_summary["FinalBankroll"] - starting_bankroll
+        staking_summary["ROI"] = staking_summary["Profit"] / starting_bankroll
+
+        staking_summary = staking_summary[
+            [
+                "StakingPlan",
+                "FinalBankroll",
+                "Profit",
+                "ROI",
+                "MaxDrawdown",
+                "AverageStake",
+                "MaxStake"
+            ]
+        ]
+
+        st.dataframe(
+            staking_summary,
+            use_container_width=True
+        )
+
+        st.info(
+            "Higher percentage staking can grow faster, but it also increases volatility and drawdown. "
+            "Flat staking is usually safer for testing whether the betting edge is real."
+        )
+
+# =========================
+# Tab 7: Bet Explorer
 # =========================
 
 with tab_bets:
@@ -915,7 +1200,7 @@ with tab_bets:
         st.plotly_chart(fig_ev_odds, use_container_width=True)
 
 # =========================
-# Tab 7: Risk / Drawdown
+# Tab 8: Risk / Drawdown
 # =========================
 
 with tab_risk:
