@@ -3,6 +3,10 @@ import pandas as pd
 import plotly.express as px
 from pathlib import Path
 
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
 # =========================
 # Page Config
 # =========================
@@ -21,7 +25,7 @@ st.title("⚽ Soccer Edge Lab")
 st.caption(
     "Model-based soccer betting analytics using Elo ratings, ML probabilities, "
     "expected value filtering, odds bands, walk-forward backtesting, bankroll simulation, "
-    "and model calibration."
+    "model calibration, and feature explainability."
 )
 
 # =========================
@@ -34,6 +38,7 @@ BETS_FILE = DATA_DIR / "best_strategy_bets_v1.csv"
 SEASON_FILE = DATA_DIR / "best_strategy_season_summary_v1.csv"
 MODEL_FILE = DATA_DIR / "best_strategy_model_summary_v1.csv"
 GRID_FILE = DATA_DIR / "walk_forward_grid_search_v1.csv"
+FEATURE_STORE_FILE = DATA_DIR / "feature_store_v1.csv"
 
 # =========================
 # Load Data
@@ -68,6 +73,11 @@ if GRID_FILE.exists():
 else:
     grid_results = None
 
+if FEATURE_STORE_FILE.exists():
+    feature_store = load_csv(FEATURE_STORE_FILE)
+else:
+    feature_store = None
+
 # =========================
 # Helpers
 # =========================
@@ -100,6 +110,7 @@ def parse_percent_column(series):
 def make_bool_series(series):
     if series.dtype == bool:
         return series
+
     return (
         series
         .astype(str)
@@ -267,10 +278,11 @@ main_metrics = calculate_metrics(filtered_bets)
 # Tabs
 # =========================
 
-tab_overview, tab_model, tab_calibration, tab_strategy, tab_comparison, tab_simulator, tab_bankroll, tab_bets, tab_risk = st.tabs([
+tab_overview, tab_model, tab_calibration, tab_features, tab_strategy, tab_comparison, tab_simulator, tab_bankroll, tab_bets, tab_risk = st.tabs([
     "🏠 Overview",
     "🤖 Model Performance",
     "📏 Model Calibration",
+    "🧠 Feature Importance",
     "📊 Strategy Results",
     "🏁 Strategy Comparison",
     "🧪 Strategy Simulator",
@@ -554,7 +566,238 @@ with tab_calibration:
         )
 
 # =========================
-# Tab 4: Strategy Results
+# Tab 4: Feature Importance
+# =========================
+
+with tab_features:
+    st.header("🧠 Feature Importance")
+
+    st.write(
+        "This tab retrains the Logistic Regression model on the saved feature store and shows which features have the strongest coefficients. "
+        "This is a model explainability view, not proof of causality."
+    )
+
+    feature_columns = [
+        "HomeElo",
+        "AwayElo",
+        "EloDiff",
+        "HomeTeamHomeElo",
+        "AwayTeamAwayElo",
+        "HomeAwayEloDiff",
+        "HomeFormPoints",
+        "AwayFormPoints",
+        "HomeFormGoalsFor",
+        "AwayFormGoalsFor",
+        "HomeFormGoalsAgainst",
+        "AwayFormGoalsAgainst",
+        "HomeAdvantage",
+        "FormPointDiff",
+        "FormGoalsForDiff",
+        "FormGoalsAgainstDiff",
+        "HomeAttackRating",
+        "AwayAttackRating",
+        "HomeDefenseRating",
+        "AwayDefenseRating",
+        "HomeGoalDiffRating",
+        "AwayGoalDiffRating",
+        "AttackRatingDiff",
+        "DefenseRatingDiff",
+        "GoalDiffRatingDiff",
+    ]
+
+    class_name_map = {
+        0: "Away Win",
+        1: "Draw",
+        2: "Home Win",
+        "0": "Away Win",
+        "1": "Draw",
+        "2": "Home Win",
+    }
+
+    if feature_store is None:
+        st.warning(
+            "Feature store file not found. Create this file first: data/processed/feature_store_v1.csv"
+        )
+        st.code(
+            "python scripts/build_feature_store.py",
+            language="powershell"
+        )
+
+    else:
+        missing_feature_cols = [
+            col for col in feature_columns
+            if col not in feature_store.columns
+        ]
+
+        if "Result" not in feature_store.columns:
+            st.error("Result column was not found in feature_store_v1.csv.")
+
+        elif missing_feature_cols:
+            st.error("Some feature columns were not found in feature_store_v1.csv.")
+            st.write("Missing columns:")
+            st.write(missing_feature_cols)
+
+            st.write("Available columns:")
+            st.write(list(feature_store.columns))
+
+        else:
+            model_data = feature_store.dropna(
+                subset=feature_columns + ["Result"]
+            ).copy()
+
+            if len(model_data) == 0:
+                st.warning("No usable rows available after dropping missing feature values.")
+
+            else:
+                X = model_data[feature_columns]
+                y = model_data["Result"]
+
+                explain_model = Pipeline([
+                    ("scaler", StandardScaler()),
+                    ("classifier", LogisticRegression(max_iter=5000))
+                ])
+
+                explain_model.fit(X, y)
+
+                classifier = explain_model.named_steps["classifier"]
+                classes = classifier.classes_
+                coefficients = classifier.coef_
+
+                if coefficients.ndim == 1:
+                    coefficient_df = pd.DataFrame({
+                        "Feature": feature_columns,
+                        "Class": "Model",
+                        "Coefficient": coefficients
+                    })
+                else:
+                    coefficient_rows = []
+
+                    for class_index, class_value in enumerate(classes):
+                        class_name = class_name_map.get(class_value, str(class_value))
+
+                        for feature, coefficient in zip(feature_columns, coefficients[class_index]):
+                            coefficient_rows.append({
+                                "Feature": feature,
+                                "Class": class_name,
+                                "Coefficient": coefficient
+                            })
+
+                    coefficient_df = pd.DataFrame(coefficient_rows)
+
+                coefficient_df["AbsoluteCoefficient"] = coefficient_df["Coefficient"].abs()
+
+                overall_importance = (
+                    coefficient_df
+                    .groupby("Feature")
+                    .agg(
+                        MeanAbsoluteCoefficient=("AbsoluteCoefficient", "mean"),
+                        MaxAbsoluteCoefficient=("AbsoluteCoefficient", "max")
+                    )
+                    .reset_index()
+                    .sort_values("MeanAbsoluteCoefficient", ascending=False)
+                )
+
+                top_n = st.slider(
+                    "Number of features to show",
+                    min_value=5,
+                    max_value=len(feature_columns),
+                    value=15,
+                    step=1
+                )
+
+                top_features = overall_importance.head(top_n)
+
+                c1, c2, c3, c4 = st.columns(4)
+
+                with c1:
+                    st.metric("Training Rows", f"{len(model_data)}")
+
+                with c2:
+                    st.metric("Features", f"{len(feature_columns)}")
+
+                with c3:
+                    st.metric("Classes", f"{len(classes)}")
+
+                with c4:
+                    st.metric("Top Feature", top_features.iloc[0]["Feature"])
+
+                st.divider()
+
+                st.subheader("Overall Feature Importance")
+
+                fig_feature_importance = px.bar(
+                    top_features.sort_values("MeanAbsoluteCoefficient", ascending=True),
+                    x="MeanAbsoluteCoefficient",
+                    y="Feature",
+                    orientation="h",
+                    title="Top Features by Mean Absolute Logistic Regression Coefficient"
+                )
+
+                st.plotly_chart(fig_feature_importance, use_container_width=True)
+
+                st.subheader("Overall Importance Table")
+
+                st.dataframe(
+                    overall_importance,
+                    use_container_width=True
+                )
+
+                st.subheader("Class-Specific Coefficients")
+
+                selected_class = st.selectbox(
+                    "Select outcome class",
+                    options=sorted(coefficient_df["Class"].unique())
+                )
+
+                class_coefficients = (
+                    coefficient_df[coefficient_df["Class"] == selected_class]
+                    .copy()
+                    .sort_values("AbsoluteCoefficient", ascending=False)
+                    .head(top_n)
+                )
+
+                fig_class_coefficients = px.bar(
+                    class_coefficients.sort_values("Coefficient", ascending=True),
+                    x="Coefficient",
+                    y="Feature",
+                    orientation="h",
+                    title=f"Feature Coefficients for {selected_class}"
+                )
+
+                st.plotly_chart(fig_class_coefficients, use_container_width=True)
+
+                st.dataframe(
+                    class_coefficients,
+                    use_container_width=True
+                )
+
+                st.subheader("Coefficient Heatmap")
+
+                heatmap_data = coefficient_df.pivot(
+                    index="Feature",
+                    columns="Class",
+                    values="Coefficient"
+                ).reset_index()
+
+                heatmap_long = coefficient_df.copy()
+
+                fig_heatmap = px.density_heatmap(
+                    heatmap_long,
+                    x="Class",
+                    y="Feature",
+                    z="Coefficient",
+                    title="Feature Coefficient Heatmap by Outcome Class"
+                )
+
+                st.plotly_chart(fig_heatmap, use_container_width=True)
+
+                st.info(
+                    "Positive coefficients increase the model's tendency toward that outcome class after scaling. "
+                    "Negative coefficients push away from that outcome class. Larger absolute values mean the feature has more influence."
+                )
+
+# =========================
+# Tab 5: Strategy Results
 # =========================
 
 with tab_strategy:
@@ -619,7 +862,7 @@ with tab_strategy:
         st.plotly_chart(fig_bets, use_container_width=True)
 
 # =========================
-# Tab 5: Strategy Comparison
+# Tab 6: Strategy Comparison
 # =========================
 
 with tab_comparison:
@@ -841,7 +1084,7 @@ with tab_comparison:
                 st.plotly_chart(fig_odds_band, use_container_width=True)
 
 # =========================
-# Tab 6: Strategy Simulator
+# Tab 7: Strategy Simulator
 # =========================
 
 with tab_simulator:
@@ -1014,7 +1257,7 @@ with tab_simulator:
         st.warning("No bets match the selected simulator filters.")
 
 # =========================
-# Tab 7: Bankroll Simulator
+# Tab 8: Bankroll Simulator
 # =========================
 
 with tab_bankroll:
@@ -1102,41 +1345,9 @@ with tab_bankroll:
 
         flat_sim = pd.DataFrame(flat_rows)
 
-        pct_rows = []
-        pct_bankroll = starting_bankroll
-        pct_peak = starting_bankroll
-
-        for i, row in bankroll_bets.iterrows():
-            odds = row[odds_col]
-            won = row["WonBool"]
-
-            stake = pct_bankroll * selected_pct_stake
-
-            if stake <= 0:
-                profit = 0
-            elif won:
-                profit = stake * (odds - 1)
-            else:
-                profit = -stake
-
-            pct_bankroll += profit
-            pct_peak = max(pct_peak, pct_bankroll)
-            drawdown = pct_peak - pct_bankroll
-
-            pct_rows.append({
-                "BetNumber": i + 1,
-                "Stake": stake,
-                "Profit": profit,
-                "Bankroll": pct_bankroll,
-                "Drawdown": drawdown,
-                "StakingPlan": f"{selected_pct_stake:.0%} Bankroll Stake"
-            })
-
-        pct_sim = pd.DataFrame(pct_rows)
-
         pct_plan_rows = []
 
-        for pct in [0.01, 0.02, 0.03, 0.05]:
+        for pct in [0.01, 0.02, 0.03, 0.05, selected_pct_stake]:
             bankroll = starting_bankroll
             peak = starting_bankroll
 
@@ -1169,45 +1380,67 @@ with tab_bankroll:
         pct_plans_sim = pd.DataFrame(pct_plan_rows)
         combined_sim = pd.concat([flat_sim, pct_plans_sim], ignore_index=True)
 
-        flat_final_bankroll = flat_sim["Bankroll"].iloc[-1]
-        flat_profit = flat_final_bankroll - starting_bankroll
-        flat_roi = flat_profit / starting_bankroll
-        flat_max_drawdown = flat_sim["Drawdown"].max()
+        staking_summary = (
+            combined_sim
+            .groupby("StakingPlan")
+            .agg(
+                FinalBankroll=("Bankroll", "last"),
+                MaxDrawdown=("Drawdown", "max"),
+                AverageStake=("Stake", "mean"),
+                MaxStake=("Stake", "max")
+            )
+            .reset_index()
+        )
 
-        pct_final_bankroll = pct_sim["Bankroll"].iloc[-1]
-        pct_profit = pct_final_bankroll - starting_bankroll
-        pct_roi = pct_profit / starting_bankroll
-        pct_max_drawdown = pct_sim["Drawdown"].max()
+        staking_summary["Profit"] = staking_summary["FinalBankroll"] - starting_bankroll
+        staking_summary["ROI"] = staking_summary["Profit"] / starting_bankroll
+
+        staking_summary = staking_summary[
+            [
+                "StakingPlan",
+                "FinalBankroll",
+                "Profit",
+                "ROI",
+                "MaxDrawdown",
+                "AverageStake",
+                "MaxStake"
+            ]
+        ]
+
+        selected_plan_name = f"{selected_pct_stake:.0%} Bankroll Stake"
+
+        flat_summary = staking_summary[staking_summary["StakingPlan"] == "Flat Stake"].iloc[0]
+        pct_summary = staking_summary[staking_summary["StakingPlan"] == selected_plan_name].iloc[0]
 
         st.subheader("Selected Staking Plan Comparison")
 
         bm1, bm2, bm3, bm4 = st.columns(4)
 
         with bm1:
-            st.metric("Flat Final Bankroll", f"{flat_final_bankroll:.2f}")
+            st.metric("Flat Final Bankroll", f"{flat_summary['FinalBankroll']:.2f}")
 
         with bm2:
-            st.metric("Flat Profit", f"{flat_profit:+.2f}")
+            st.metric("Flat Profit", f"{flat_summary['Profit']:+.2f}")
 
         with bm3:
-            st.metric("Flat ROI", f"{flat_roi:.2%}")
+            st.metric("Flat ROI", f"{flat_summary['ROI']:.2%}")
 
         with bm4:
-            st.metric("Flat Max Drawdown", f"{flat_max_drawdown:.2f}")
+            st.metric("Flat Max Drawdown", f"{flat_summary['MaxDrawdown']:.2f}")
 
         bm5, bm6, bm7, bm8 = st.columns(4)
 
         with bm5:
-            st.metric("Percent Final Bankroll", f"{pct_final_bankroll:.2f}")
+            st.metric("Percent Final Bankroll", f"{pct_summary['FinalBankroll']:.2f}")
 
         with bm6:
-            st.metric("Percent Profit", f"{pct_profit:+.2f}")
+            st.metric("Percent Profit", f"{pct_summary['Profit']:+.2f}")
 
         with bm7:
-            st.metric("Percent ROI", f"{pct_roi:.2%}")
+            st.metric("Percent ROI", f"{pct_summary['ROI']:.2%}")
 
         with bm8:
-            st.metric("Percent Max Drawdown", f"{pct_max_drawdown:.2f}")
+            st.metric("Percent Max Drawdown", f"{pct_summary['MaxDrawdown']:.2f}")
 
         st.divider()
 
@@ -1237,33 +1470,6 @@ with tab_bankroll:
 
         st.subheader("Staking Plan Summary")
 
-        staking_summary = (
-            combined_sim
-            .groupby("StakingPlan")
-            .agg(
-                FinalBankroll=("Bankroll", "last"),
-                MaxDrawdown=("Drawdown", "max"),
-                AverageStake=("Stake", "mean"),
-                MaxStake=("Stake", "max")
-            )
-            .reset_index()
-        )
-
-        staking_summary["Profit"] = staking_summary["FinalBankroll"] - starting_bankroll
-        staking_summary["ROI"] = staking_summary["Profit"] / starting_bankroll
-
-        staking_summary = staking_summary[
-            [
-                "StakingPlan",
-                "FinalBankroll",
-                "Profit",
-                "ROI",
-                "MaxDrawdown",
-                "AverageStake",
-                "MaxStake"
-            ]
-        ]
-
         st.dataframe(
             staking_summary,
             use_container_width=True
@@ -1275,7 +1481,7 @@ with tab_bankroll:
         )
 
 # =========================
-# Tab 8: Bet Explorer
+# Tab 9: Bet Explorer
 # =========================
 
 with tab_bets:
@@ -1346,7 +1552,7 @@ with tab_bets:
         st.plotly_chart(fig_ev_odds, use_container_width=True)
 
 # =========================
-# Tab 9: Risk / Drawdown
+# Tab 10: Risk / Drawdown
 # =========================
 
 with tab_risk:
@@ -1443,3 +1649,7 @@ with st.expander("Developer Debug: Show detected columns"):
     if grid_results is not None:
         st.write("Grid search columns:")
         st.write(list(grid_results.columns))
+
+    if feature_store is not None:
+        st.write("Feature store columns:")
+        st.write(list(feature_store.columns))
