@@ -20,7 +20,8 @@ st.set_page_config(
 st.title("⚽ Soccer Edge Lab")
 st.caption(
     "Model-based soccer betting analytics using Elo ratings, ML probabilities, "
-    "expected value filtering, odds bands, and walk-forward backtesting."
+    "expected value filtering, odds bands, walk-forward backtesting, bankroll simulation, "
+    "and model calibration."
 )
 
 # =========================
@@ -94,6 +95,17 @@ def parse_percent_column(series):
             .astype(float) / 100
         )
     return series
+
+
+def make_bool_series(series):
+    if series.dtype == bool:
+        return series
+    return (
+        series
+        .astype(str)
+        .str.lower()
+        .isin(["true", "1", "yes", "won", "win"])
+    )
 
 
 # =========================
@@ -227,7 +239,7 @@ def calculate_metrics(df):
 
     total_profit = df[profit_col].sum()
     roi = total_profit / total_bets
-    win_rate = df[result_col].mean()
+    win_rate = make_bool_series(df[result_col]).mean()
     avg_odds = df[odds_col].mean()
     avg_ev = df[ev_col].mean()
     avg_prob = df[prob_col].mean()
@@ -255,9 +267,10 @@ main_metrics = calculate_metrics(filtered_bets)
 # Tabs
 # =========================
 
-tab_overview, tab_model, tab_strategy, tab_comparison, tab_simulator, tab_bankroll, tab_bets, tab_risk = st.tabs([
+tab_overview, tab_model, tab_calibration, tab_strategy, tab_comparison, tab_simulator, tab_bankroll, tab_bets, tab_risk = st.tabs([
     "🏠 Overview",
     "🤖 Model Performance",
+    "📏 Model Calibration",
     "📊 Strategy Results",
     "🏁 Strategy Comparison",
     "🧪 Strategy Simulator",
@@ -385,7 +398,163 @@ with tab_model:
         st.plotly_chart(fig_logloss, use_container_width=True)
 
 # =========================
-# Tab 3: Strategy Results
+# Tab 3: Model Calibration
+# =========================
+
+with tab_calibration:
+    st.header("📏 Model Calibration")
+
+    st.write(
+        "Calibration checks whether the model's predicted probabilities match real outcomes. "
+        "Example: when the model says 60%, the bet should win close to 60% of the time."
+    )
+
+    calibration_source = st.radio(
+        "Calibration Data",
+        options=["All saved best-strategy bets", "Current sidebar-filtered bets"],
+        horizontal=True
+    )
+
+    if calibration_source == "All saved best-strategy bets":
+        calibration_data = bets.copy()
+    else:
+        calibration_data = filtered_bets.copy()
+
+    calibration_data = calibration_data.dropna(subset=[prob_col, result_col]).copy()
+    calibration_data[prob_col] = pd.to_numeric(calibration_data[prob_col], errors="coerce")
+    calibration_data = calibration_data.dropna(subset=[prob_col]).copy()
+    calibration_data["WonBool"] = make_bool_series(calibration_data[result_col]).astype(int)
+
+    if len(calibration_data) == 0:
+        st.warning("No calibration data available for the selected filters.")
+    else:
+        calibration_data["ProbabilityBin"] = pd.cut(
+            calibration_data[prob_col],
+            bins=[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+            labels=[
+                "0-10%",
+                "10-20%",
+                "20-30%",
+                "30-40%",
+                "40-50%",
+                "50-60%",
+                "60-70%",
+                "70-80%",
+                "80-90%",
+                "90-100%",
+            ],
+            include_lowest=True
+        )
+
+        calibration_summary = (
+            calibration_data
+            .groupby("ProbabilityBin", observed=False)
+            .agg(
+                Bets=("WonBool", "count"),
+                AvgPredictedProbability=(prob_col, "mean"),
+                ActualWinRate=("WonBool", "mean")
+            )
+            .reset_index()
+        )
+
+        calibration_summary = calibration_summary[calibration_summary["Bets"] > 0].copy()
+        calibration_summary["CalibrationGap"] = (
+            calibration_summary["ActualWinRate"] -
+            calibration_summary["AvgPredictedProbability"]
+        )
+        calibration_summary["AbsoluteGap"] = calibration_summary["CalibrationGap"].abs()
+
+        brier_score = ((calibration_data[prob_col] - calibration_data["WonBool"]) ** 2).mean()
+        average_predicted_probability = calibration_data[prob_col].mean()
+        actual_win_rate = calibration_data["WonBool"].mean()
+
+        if len(calibration_summary) > 0:
+            expected_calibration_error = (
+                calibration_summary["AbsoluteGap"] * calibration_summary["Bets"]
+            ).sum() / calibration_summary["Bets"].sum()
+        else:
+            expected_calibration_error = 0
+
+        c1, c2, c3, c4 = st.columns(4)
+
+        with c1:
+            st.metric("Calibration Bets", f"{len(calibration_data)}")
+
+        with c2:
+            st.metric("Avg Predicted Prob", format_percent(average_predicted_probability))
+
+        with c3:
+            st.metric("Actual Win Rate", format_percent(actual_win_rate))
+
+        with c4:
+            st.metric("Brier Score", f"{brier_score:.4f}")
+
+        c5, c6 = st.columns(2)
+
+        with c5:
+            st.metric("Calibration Error", format_percent(expected_calibration_error))
+
+        with c6:
+            st.metric("Overall Gap", format_percent(actual_win_rate - average_predicted_probability))
+
+        st.divider()
+
+        st.subheader("Calibration Table")
+
+        st.dataframe(
+            calibration_summary,
+            use_container_width=True
+        )
+
+        st.subheader("Predicted Probability vs Actual Win Rate")
+
+        fig_calibration = px.line(
+            calibration_summary,
+            x="AvgPredictedProbability",
+            y="ActualWinRate",
+            markers=True,
+            hover_data=["ProbabilityBin", "Bets", "CalibrationGap"],
+            title="Calibration Curve"
+        )
+
+        fig_calibration.add_scatter(
+            x=[0, 1],
+            y=[0, 1],
+            mode="lines",
+            name="Perfect Calibration"
+        )
+
+        st.plotly_chart(fig_calibration, use_container_width=True)
+
+        st.subheader("Calibration Gap by Probability Band")
+
+        fig_gap = px.bar(
+            calibration_summary,
+            x="ProbabilityBin",
+            y="CalibrationGap",
+            title="Actual Win Rate minus Predicted Probability"
+        )
+
+        st.plotly_chart(fig_gap, use_container_width=True)
+
+        st.subheader("Prediction Confidence Distribution")
+
+        fig_prob_dist = px.histogram(
+            calibration_data,
+            x=prob_col,
+            nbins=20,
+            title="Distribution of Model Probabilities"
+        )
+
+        st.plotly_chart(fig_prob_dist, use_container_width=True)
+
+        st.info(
+            "Lower Brier Score is better. A positive calibration gap means the model was too conservative in that band; "
+            "a negative gap means the model was too optimistic."
+        )
+
+# =========================
+# Tab 4: Strategy Results
 # =========================
 
 with tab_strategy:
@@ -450,7 +619,7 @@ with tab_strategy:
         st.plotly_chart(fig_bets, use_container_width=True)
 
 # =========================
-# Tab 4: Strategy Comparison
+# Tab 5: Strategy Comparison
 # =========================
 
 with tab_comparison:
@@ -672,7 +841,7 @@ with tab_comparison:
                 st.plotly_chart(fig_odds_band, use_container_width=True)
 
 # =========================
-# Tab 5: Strategy Simulator
+# Tab 6: Strategy Simulator
 # =========================
 
 with tab_simulator:
@@ -845,7 +1014,7 @@ with tab_simulator:
         st.warning("No bets match the selected simulator filters.")
 
 # =========================
-# Tab 6: Bankroll Simulator
+# Tab 7: Bankroll Simulator
 # =========================
 
 with tab_bankroll:
@@ -899,9 +1068,7 @@ with tab_bankroll:
         else:
             bankroll_bets = bankroll_bets.reset_index(drop=True)
 
-        # =========================
-        # Flat Stake Simulation
-        # =========================
+        bankroll_bets["WonBool"] = make_bool_series(bankroll_bets[result_col])
 
         flat_rows = []
         flat_bankroll = starting_bankroll
@@ -909,7 +1076,7 @@ with tab_bankroll:
 
         for i, row in bankroll_bets.iterrows():
             odds = row[odds_col]
-            won = row[result_col]
+            won = row["WonBool"]
 
             stake = min(flat_stake, flat_bankroll)
 
@@ -935,17 +1102,13 @@ with tab_bankroll:
 
         flat_sim = pd.DataFrame(flat_rows)
 
-        # =========================
-        # Selected Percentage Stake Simulation
-        # =========================
-
         pct_rows = []
         pct_bankroll = starting_bankroll
         pct_peak = starting_bankroll
 
         for i, row in bankroll_bets.iterrows():
             odds = row[odds_col]
-            won = row[result_col]
+            won = row["WonBool"]
 
             stake = pct_bankroll * selected_pct_stake
 
@@ -971,10 +1134,6 @@ with tab_bankroll:
 
         pct_sim = pd.DataFrame(pct_rows)
 
-        # =========================
-        # Multiple Percentage Plans
-        # =========================
-
         pct_plan_rows = []
 
         for pct in [0.01, 0.02, 0.03, 0.05]:
@@ -983,7 +1142,7 @@ with tab_bankroll:
 
             for i, row in bankroll_bets.iterrows():
                 odds = row[odds_col]
-                won = row[result_col]
+                won = row["WonBool"]
 
                 stake = bankroll * pct
 
@@ -1008,12 +1167,7 @@ with tab_bankroll:
                 })
 
         pct_plans_sim = pd.DataFrame(pct_plan_rows)
-
         combined_sim = pd.concat([flat_sim, pct_plans_sim], ignore_index=True)
-
-        # =========================
-        # Summary Metrics
-        # =========================
 
         flat_final_bankroll = flat_sim["Bankroll"].iloc[-1]
         flat_profit = flat_final_bankroll - starting_bankroll
@@ -1057,10 +1211,6 @@ with tab_bankroll:
 
         st.divider()
 
-        # =========================
-        # Bankroll Curves
-        # =========================
-
         st.subheader("Bankroll Growth by Staking Plan")
 
         fig_bankroll = px.line(
@@ -1084,10 +1234,6 @@ with tab_bankroll:
         )
 
         st.plotly_chart(fig_bankroll_drawdown, use_container_width=True)
-
-        # =========================
-        # Staking Plan Summary Table
-        # =========================
 
         st.subheader("Staking Plan Summary")
 
@@ -1129,7 +1275,7 @@ with tab_bankroll:
         )
 
 # =========================
-# Tab 7: Bet Explorer
+# Tab 8: Bet Explorer
 # =========================
 
 with tab_bets:
@@ -1200,7 +1346,7 @@ with tab_bets:
         st.plotly_chart(fig_ev_odds, use_container_width=True)
 
 # =========================
-# Tab 8: Risk / Drawdown
+# Tab 9: Risk / Drawdown
 # =========================
 
 with tab_risk:
